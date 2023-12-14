@@ -1,7 +1,8 @@
 import {useEffect, useState} from "react";
-import {CheckboxItem} from "@/components/Tree/checkboxItem";
 import styles from "./index.module.less"
-import {useDispatch, useSelector} from "@@/plugin-dva/exports";
+import {CheckboxItem} from "@/components/ExportTree/checkboxItem";
+import {useDispatch} from "@umijs/max";
+import { useSelector } from "@umijs/max";
 
 function copyData(data: any) {
     return JSON.parse(JSON.stringify(data));
@@ -11,7 +12,7 @@ const RenderTreeNode = (props: any) => {
     const dispatch = useDispatch()
     const {
         treeMap,
-        defaultCheckedKeys,
+        defaultCheckedKeys=[],
         defaultSelectedKeys = [],
         halfCheckedKeys,
         treeData = [],
@@ -330,8 +331,6 @@ export const ExportTree = (props: any) => {
                     halfCheckedKeys.splice(index, 1)
                 })
             }
-
-
             dispatch({
                 type: "Global/save",
                 payload: {
@@ -364,9 +363,6 @@ export const ExportTree = (props: any) => {
             })
         }
     }, [defaultCheckedKeys, treeMap]);
-
-    console.log(defaultCheckedKeys, "defaultCheckedKeys")
-    console.log(halfCheckedKeys, "halfCheckedKeys")
     return <div className={styles.tree}>
         <RenderTreeNode
             treeData={treeData}
